@@ -6,9 +6,15 @@ interface Props {
   activity: Activity | undefined;
   closeForm: () => void;
   createOrEdit: (activity: Activity) => void;
+  submitting: boolean;
 }
 
-const ActivityForm = ({ activity: selectedActivity, closeForm, createOrEdit }: Props) => {
+const ActivityForm = ({
+  activity: selectedActivity,
+  closeForm,
+  createOrEdit,
+  submitting,
+}: Props) => {
   const initialState = selectedActivity ?? {
     id: "",
     title: "",
@@ -25,7 +31,9 @@ const ActivityForm = ({ activity: selectedActivity, closeForm, createOrEdit }: P
     createOrEdit(activity);
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setActivity({
       ...activity,
@@ -55,6 +63,7 @@ const ActivityForm = ({ activity: selectedActivity, closeForm, createOrEdit }: P
           onChange={handleInputChange}
         />
         <Form.Input
+          type="date"
           placeholder="Date"
           value={activity.date}
           name="date"
@@ -72,7 +81,13 @@ const ActivityForm = ({ activity: selectedActivity, closeForm, createOrEdit }: P
           name="venue"
           onChange={handleInputChange}
         />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button
+          loading={submitting}
+          floated="right"
+          positive
+          type="submit"
+          content="Submit"
+        />
         <Button
           floated="right"
           type="button"
