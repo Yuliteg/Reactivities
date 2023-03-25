@@ -1,11 +1,12 @@
-import {RouterProvider} from 'react-router-dom'
+import { RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import "semantic-ui-css/semantic.min.css";
-import "react-calendar/dist/Calendar.css"
+import "react-calendar/dist/Calendar.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import "./app/layout/styles.css";
 import reportWebVitals from "./reportWebVitals";
 import { store, StoreContext } from "./app/stores/store";
-import { router } from './app/router/Router';
+import { router } from "./app/router/Router";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
