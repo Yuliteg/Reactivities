@@ -1,4 +1,6 @@
+import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 import { Button, Header, Item, Segment, Image } from "semantic-ui-react";
 import { Activity } from "../../../app/Models/activity";
 
@@ -38,7 +40,7 @@ interface Props {
                   content={activity.title}
                   style={{ color: "white" }}
                 />
-                <p>{activity.date}</p>
+                <p>{format(activity.date!, 'dd MMM yyyy')}</p>
                 <p>
                   Hosted by <strong>Bob</strong>
                 </p>
@@ -50,7 +52,7 @@ interface Props {
       <Segment clearing attached="bottom">
         <Button color="teal">Join Activity</Button>
         <Button>Cancel attendance</Button>
-        <Button positive floated="right">
+        <Button as={Link} to={`/manage/${activity.id}`} positive floated="right">
           Manage Event
         </Button>
       </Segment>
