@@ -44,3 +44,8 @@ body {
   font-size: 1.7em;
   font-weight: normal;
 }
+
+.ui.horizontal.list {
+  display: flex;
+  gap: 2%;
+}
