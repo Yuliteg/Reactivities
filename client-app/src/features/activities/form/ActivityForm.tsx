@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
-import { Activity } from "../../../app/Models/activity";
+import { ActivityFormValues } from "../../../app/Models/activity";
 import { useStore } from "../../../app/stores/store";
 import { v4 as uuid } from "uuid";
 import { Formik, Form } from "formik";
@@ -19,22 +19,13 @@ const ActivityForm = () => {
   const {
     createActivity,
     updateActivity,
-    loading,
     loadActivity,
     loadingInitial,
   } = activityStore;
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [activity, setActivity] = useState<Activity>({
-    id: "",
-    title: "",
-    category: "",
-    description: "",
-    date: null,
-    city: "",
-    venue: "",
-  });
+  const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
 
   const validationSchema = Yup.object({
     title: Yup.string().required("The activity title is required"),
@@ -48,10 +39,10 @@ const ActivityForm = () => {
   });
 
   useEffect(() => {
-    if (id) loadActivity(id).then((activity) => setActivity(activity!));
+    if (id) loadActivity(id).then((activity) => setActivity(new ActivityFormValues(activity)));
   }, [id, loadActivity]);
 
-  const handleFormSubmit = (activity: Activity) => {
+  const handleFormSubmit = (activity: ActivityFormValues) => {
     if (!activity.id) {
       activity.id = uuid();
       createActivity(activity).then(() =>
@@ -96,7 +87,7 @@ const ActivityForm = () => {
             <TextInput placeholder="Venue" name="venue" />
             <Button
               disabled={isSubmitting || !dirty || !isValid}
-              loading={loading}
+              loading={isSubmitting}
               floated="right"
               positive
               type="submit"
