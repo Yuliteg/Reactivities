@@ -7,6 +7,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Application.Interfaces;
 using Infrastructure.Security;
+using Infrastructure.Photos;
 
 namespace API.Extentions
 {
@@ -26,7 +27,7 @@ namespace API.Extentions
         {
           opt.AddPolicy("CorsPolicy", policy =>
           {
-            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3001");
           });
         });
 
@@ -36,7 +37,8 @@ namespace API.Extentions
       services.AddValidatorsFromAssemblyContaining<Create>();
       services.AddHttpContextAccessor();
       services.AddScoped<IUserAccessor, UserAccessor>();
-       
+      services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+      services.Configure<CloundinarySettings>(config.GetSection("Cloudinary"));
 
       return services;
     }
