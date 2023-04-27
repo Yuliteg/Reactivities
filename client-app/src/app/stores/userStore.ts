@@ -31,12 +31,16 @@ export default class UserStore {
     try {
       const user = await agent.Account.register(creds);
       store.commonStore.setToken(user.token);
-      runInAction(() => this.user = user);
+      runInAction(() => (this.user = user));
       router.navigate("/activities");
       store.modalStore.closeModal();
     } catch (error) {
       throw error;
     }
+  };
+
+  setImage = (image: string) => {
+    if (this.user) this.user.image = image;
   };
 
   logout = () => {

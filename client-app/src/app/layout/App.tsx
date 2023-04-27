@@ -3,7 +3,6 @@ import Navbar from "./Navbar";
 import { observer } from "mobx-react-lite";
 import { Outlet, useLocation } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
-import { Toast } from "react-toastify/dist/components";
 import { ToastContainer } from "react-toastify";
 import { useStore } from "../stores/store";
 import { useEffect } from "react";

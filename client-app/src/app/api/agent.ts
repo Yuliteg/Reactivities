@@ -4,6 +4,7 @@ import { Activity, ActivityFormValues } from "../Models/activity";
 import { User, UserFormValues } from "../Models/user";
 import { router } from "../router/Router";
 import { store } from "../stores/store";
+import { Photo, Profile } from "../Models/Profile";
 
 const sleep = (dalay: number) => {
   return new Promise((resolve) => {
@@ -75,11 +76,12 @@ const requests = {
 const Activities = {
   list: () => requests.get<Activity[]>("./activities"),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
-  create: (activity: ActivityFormValues) => requests.post<void>("/activities", activity),
+  create: (activity: ActivityFormValues) =>
+    requests.post<void>("/activities", activity),
   update: (activity: ActivityFormValues) =>
     requests.put<void>(`/activities/${activity.id}`, activity),
   delete: (id: string) => requests.del<void>(`/activities/${id}`),
-  attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})
+  attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
 };
 
 const Account = {
@@ -89,9 +91,23 @@ const Account = {
     requests.post<User>("/account/register", user),
 };
 
+const Profiles = {
+  get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+  uploadPhoto: (file: Blob) => {
+    let formData = new FormData();
+    formData.append("File", file);
+    return axios.post<Photo>("photos", formData, {
+      headers: { "Content-Type": "Content-Type" },
+    });
+  },
+  setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
+  deletePhoto: (id: string) => requests.del(`/photos/${id}`)
+};
+
 const agent = {
   Activities,
   Account,
+  Profiles,
 };
 
 export default agent;
