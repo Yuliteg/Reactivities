@@ -39,6 +39,7 @@ namespace API.Extentions
       services.AddScoped<IUserAccessor, UserAccessor>();
       services.AddScoped<IPhotoAccessor, PhotoAccessor>();
       services.Configure<CloundinarySettings>(config.GetSection("Cloudinary"));
+      services.AddSignalR();
 
       return services;
     }
