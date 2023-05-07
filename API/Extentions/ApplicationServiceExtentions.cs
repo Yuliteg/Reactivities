@@ -31,7 +31,7 @@ namespace API.Extentions
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
-            .WithOrigins("http://localhost:3003");
+            .WithOrigins("http://localhost:3004");
           });
         });
 
