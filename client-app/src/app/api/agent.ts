@@ -4,7 +4,7 @@ import { Activity, ActivityFormValues } from "../Models/activity";
 import { User, UserFormValues } from "../Models/user";
 import { router } from "../router/Router";
 import { store } from "../stores/store";
-import { Photo, Profile } from "../Models/Profile";
+import { Photo, Profile, UserActivity } from "../Models/Profile";
 import { PaginatedResult } from "../Models/pagination";
 
 const sleep = (dalay: number) => {
@@ -84,8 +84,10 @@ const requests = {
 };
 
 const Activities = {
-  list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>("./activities", {params})
-  .then(responseBody),
+  list: (params: URLSearchParams) =>
+    axios
+      .get<PaginatedResult<Activity[]>>("./activities", { params })
+      .then(responseBody),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) =>
     requests.post<void>("/activities", activity),
@@ -117,6 +119,10 @@ const Profiles = {
     requests.post(`/follow/${username}`, {}),
   listFollowings: (username: string, predicate: string) =>
     requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+  listActivities: (username: string, predicate: string) =>
+    requests.get<UserActivity[]>(
+      `/profiles/${username}/activities?predicate=${predicate}`
+    ),
 };
 
 const agent = {
